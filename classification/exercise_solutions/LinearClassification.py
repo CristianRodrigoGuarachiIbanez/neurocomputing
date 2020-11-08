@@ -37,7 +37,8 @@ N, d = X.shape # type:int, int
 print("Inputs:", X.shape)
 print("Outputs:",t)
 
-def visualize(X: np.ndarray, t: np.ndarray, w: np.ndarray = np.array([0., 0.]), b: float = 0.) -> None:
+def visualize(X: np.ndarray, t: np.ndarray, w: np.ndarray = np.array([0., 0.]),
+              b: float = 0., title: str="") -> None:
     # Plot the positive and negative examples
     plt.plot(X[t==1., 0], X[t==1., 1], '.')
     plt.plot(X[t==-1., 0], X[t==-1., 1], '.')
@@ -46,6 +47,7 @@ def visualize(X: np.ndarray, t: np.ndarray, w: np.ndarray = np.array([0., 0.]), 
         x = [0., 1.]
         y = [-b/w[1], -(w[0] + b)/w[1]]
         plt.plot(x, y)
+    plt.title(title)
     plt.show()
 
 
@@ -159,7 +161,7 @@ print("Bias nach 100 Epoche:", b)
 epoch100: Any = visualize(X,t, w, b)
 
 #Q6: Modify your algorithm to compute the training error and the loss for each epoch.
-def perceptron_algorhytmus(X, t, N, d) -> None:
+def perceptron_algorithmus(X, t, N, d) -> None:
 
     # Parameters
     eta: int = 0.1
@@ -197,7 +199,76 @@ def perceptron_algorhytmus(X, t, N, d) -> None:
     visualize(X, t, w, b)
     plt.plot(errors, label="error")
     plt.plot(losses, label="loss")
+    plt.title("Berechnung von Losses und Errors")
     plt.legend()
     plt.show()
 
-perceptron_algorhytmus(X, t, N, d)
+perceptron_algorithmus(X, t, N, d)
+
+# Q7: Now is the time to play with the hyperparameters:
+#
+# Vary the learning rate eta between extreme values (from 0.000001 to 100.0).
+# Increase the number of epochs nb_epochs.
+# What does it change?
+def perceptron_algorithmus(X: np.ndarray, t: np.ndarray, N: int, nb_epochs: int = 100,
+                           eta: float= 0.1, w: np.ndarray = np.zeros(2)) -> Tuple[List,List, np.ndarray, float]:
+
+    # Parameters
+    #eta: float = 0.1
+    #nb_epochs: int = 100
+
+    # Initialize the weight vector and bias
+    #w: np.ndarray = np.zeros(d)
+    b: float = 0.
+
+    # Perceptron algorithm
+    errors: List = []
+    losses: List = []
+    for epoch in range(nb_epochs):
+        misclassification: int = 0
+        loss: int = 0
+        # Iterate over all training examples
+        for i in range(N):
+            # Prediction of the hypothesis
+            y_i: np.ndarray = np.sign(np.dot(w, X[i, :]) + b)
+            # Update the weight
+            w += eta * (t[i] - y_i) * X[i, :]
+            # Update the bias
+            b += eta * (t[i] - y_i)
+            # Count misclassifications
+            if t[i] != y_i:
+                misclassification += 1
+            # Loss
+            loss += (t[i] - y_i) ** 2
+
+        # Append
+        errors.append(misclassification / N)
+        losses.append(loss / N)
+
+    return losses, errors, w, b
+
+losses, errors,w,b = perceptron_algorithmus(X, t, N, eta=0.1)
+print("Gewicht mit 0.1 eta:",w)
+print("Bias mit eta 0.1", b)
+visualize(X,t,w,b)
+plt.plot(errors, label="error")
+plt.plot(losses, label="losses")
+plt.title("den Ausgangswert vom Eta ändern")
+plt.legend()
+plt.show()
+
+#Q8: Change the initial value of the weight vector  ww  to something different from 0 (e.g. [1, 1], [-10, 10], etc). What does it change?
+# Vary the learning rate again and conclude on the importance of weight initialization.
+
+losses, errors,w,b = perceptron_algorithmus(X, t, N, eta=100.0, w= np.array([-10.,-10.]))
+visualize(X,t,w,b)
+plt.plot(errors, label="error")
+plt.plot(losses, label="losses")
+plt.title("den Ausgangswert des Gewichtvektors ändern")
+plt.legend()
+plt.show()
+
+if __name__ == "__main__":
+    pass
+
+
