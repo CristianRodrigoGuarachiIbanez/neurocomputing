@@ -1,3 +1,9 @@
+"""
+Created on Fr Nov 13 2020
+@author: Cristian Rodrigo Guarachi Ibanez
+Multiple Linear Regression
+"""
+
 # Multiple linear regression
 import numpy as np
 from typing import List, Tuple, Dict, Any, TypeVar

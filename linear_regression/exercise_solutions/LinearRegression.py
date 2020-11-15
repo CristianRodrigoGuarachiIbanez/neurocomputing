@@ -1,3 +1,8 @@
+"""
+Created on Fr Nov 13 2020
+@author: Cristian Rodrigo Guarachi Ibanez
+Linear Regression
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_regression
@@ -18,7 +23,7 @@ plt.show()
 # You will use a learning rate eta = 0.1 at first, but you can choose another value later.
 # Start by running a single epoch, as it will be easier to debug it, and then increase the number of epochs to 100 or so. Print the value of the weight and bias at the end.
 
-"""Remember the LMS algorithm from the course:"""
+"""Remember the Last Mean Square oder LSM algorithm from the course:"""
 
 def lms_algorythmus(w):
   i: int = 0
@@ -45,6 +50,7 @@ def lms_algorythmus(w):
 
   print('Final error: ' + str(E))
   print('final weight: ' + str(w))
+#--------- LSM Algorithmus für jeden
 def LMS_algorythmus(E: int, N: int, X: np.ndarray, t: np.ndarray) -> Tuple[int, int]:
     '''nimmt eine Anzahl an Wiederholungen bzw. Epochen "E" und die Stichprobegröße "N" und gibt
       die angepassten Gewichte "weight" und Verzerrung "bias" '''
@@ -86,13 +92,14 @@ plt.title("used LSM Algorythm")
 plt.xlabel("t")
 plt.ylabel("y")
 plt.show()
-
+"""A much better method to analyse the result of the learning algorithm is to track the mean squared error (MSE) after each epoch,
+ i.e. the loss function which we actually want to minimize."""
 #Q5: Modify your LMS algorithm (either directly or copy it in the next cell) to track the MSE after each epoch.
 # After each epoch, append the MSE on the training set to a list and plot it at the end.
 # How does the MSE evolve? Which value does it get in the end? Why? How many epochs do you actually need?
 ###MSEx = 1/N sum(t_i - y_i)^2 -> sum über N i=1
 
-def LMS_MSE_algorythmus(E, N, graphic:bool = False) -> Tuple[int, int, List]:
+def LMS_MSE_algorythmus(E: int, N: int, graphic:bool = False) -> Tuple[int, int, List]:
     weight:int = 0
     bias: int = 0
 
@@ -121,6 +128,10 @@ def LMS_MSE_algorythmus(E, N, graphic:bool = False) -> Tuple[int, int, List]:
 
 w,b,mse = LMS_MSE_algorythmus(100, N, True)
 print(mse)
+"""Answer: the MSE decreases exponentially with the epochs. 
+It never reaches 0 because of the noise in the data (try setting the noise argument in the data generator to 0 and check that the MSE reaches 0). 
+30 or 40 epochs seem sufficient to solve the problem, nothing happens afterwards."""
+
 # Q6: Apply linear regression on the data using scikit-learn.
 # Check the model parameters after learning and compare them to what you obtained previously.
 # Make a plot comparing the predictions with the data.
