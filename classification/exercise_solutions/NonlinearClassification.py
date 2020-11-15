@@ -1,3 +1,8 @@
+"""
+Created on Fr Nov 13 2020
+@author: Cristian Rodrigo Guarachi Ibanez
+Nonlinear Classification
+"""
 import numpy as np
 import matplotlib.pyplot as plt
 from typing import List, Tuple, Any, TypeVar

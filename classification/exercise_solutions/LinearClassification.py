@@ -1,3 +1,9 @@
+"""
+Created on Fr Nov 13 2020
+@author: Cristian Rodrigo Guarachi Ibanez
+Linear Classification
+"""
+
 #1 - Perceptron algorithm for linear classification
 
 import numpy as np
@@ -9,7 +15,7 @@ try:
 except Exception as e:
     print(e)
 
-print(data)
+#print(data)
 """data is now a (100, 3) numpy array. The array is organized as follows:
 
 The two first columns are the 2D coordinates of 100 examples (between 0 and 1). This is our input space.
@@ -47,12 +53,12 @@ def visualize(X: np.ndarray, t: np.ndarray, w: np.ndarray = np.array([0., 0.]),
         x = [0., 1.]
         y = [-b/w[1], -(w[0] + b)/w[1]]
         plt.plot(x, y)
-    plt.title(title)
+    plt.title(title )
     plt.show()
 
 
 #Q2: Visualize the training set by passing X and t to the visualize() function. Leave the arguments w and b to their default value for now.
-plot: Any = visualize(X, t)
+#plot: Any = visualize(X, t)
 """
 The online version of the Perceptron is given by the following algorithm:
 
@@ -83,8 +89,8 @@ weight += eta * (t[i] - y_i) * X[i, :] #[Zeile:Ziele, Spalte: Spalte] erste Zeil
 bias += eta * (t[i] - y_i)
 
 
-print("Beispiel", i, ";eta",eta,"; X_i =", X[i, :], "; t_i =", t[i], ";y_i:", y_i)
-print("Neue hyperplane: weights =", weight, "; bias =", bias)
+# print("Beispiel", i, ";eta",eta,"; X_i =", X[i, :], "; t_i =", t[i], ";y_i:", y_i)
+# print("Neue hyperplane: weights =", weight, "; bias =", bias)
 
 #Q4: Modify the preceding code to iterate over all examples of the training set
 # (for loop with index i from 0 to N-1).
@@ -117,12 +123,12 @@ def online_perceptron_algorithm(X,t) -> Tuple:
 
     return tWeights, tBias, weight, bias
 
-tW, tB, w, b = online_perceptron_algorithm(X, t)
-
-print("Gewicht:", w)
-print("Bias:", b)
-
-perceptronView: Any = visualize(X,t,w, b)
+# tW, tB, w, b = online_perceptron_algorithm(X, t)
+#
+# print("Gewicht:", w)
+# print("Bias:", b)
+#
+# perceptronView: Any = visualize(X,t,w, b)
 
 #Q5: We now will do nb_epochs = 100 iterations over the training set.
 # Edit your code with an additional for loop. What is the hyperplane in the end? Is learning successful?
@@ -155,10 +161,10 @@ def online_perceptron_algorithm_epoch(X: np.ndarray,t: np.ndarray, N: int, Epoch
             tBias.append(bias)
     return tWeights, tBias, weight, bias
 
-W, B, w, b = online_perceptron_algorithm_epoch(X, t, N)
-print("Gewicht nach 100 Epoche:", w)
-print("Bias nach 100 Epoche:", b)
-epoch100: Any = visualize(X,t, w, b)
+# W, B, w, b = online_perceptron_algorithm_epoch(X, t, N)
+# print("Gewicht nach 100 Epoche:", w)
+# print("Bias nach 100 Epoche:", b)
+# epoch100: Any = visualize(X,t, w, b)
 
 #Q6: Modify your algorithm to compute the training error and the loss for each epoch.
 def perceptron_algorithmus(X, t, N, d) -> None:
@@ -203,14 +209,14 @@ def perceptron_algorithmus(X, t, N, d) -> None:
     plt.legend()
     plt.show()
 
-perceptron_algorithmus(X, t, N, d)
+#perceptron_algorithmus(X, t, N, d)
 
 # Q7: Now is the time to play with the hyperparameters:
 #
 # Vary the learning rate eta between extreme values (from 0.000001 to 100.0).
 # Increase the number of epochs nb_epochs.
 # What does it change?
-def perceptron_algorithmus(X: np.ndarray, t: np.ndarray, N: int, nb_epochs: int = 100,
+def perceptronOnlineVersion(X: np.ndarray, t: np.ndarray, N: int, nb_epochs: int = 100,
                            eta: float= 0.1, w: np.ndarray = np.zeros(2)) -> Tuple[List,List, np.ndarray, float]:
 
     # Parameters
@@ -247,26 +253,26 @@ def perceptron_algorithmus(X: np.ndarray, t: np.ndarray, N: int, nb_epochs: int 
 
     return losses, errors, w, b
 
-losses, errors,w,b = perceptron_algorithmus(X, t, N, eta=0.1)
-print("Gewicht mit 0.1 eta:",w)
-print("Bias mit eta 0.1", b)
-visualize(X,t,w,b)
-plt.plot(errors, label="error")
-plt.plot(losses, label="losses")
-plt.title("den Ausgangswert vom Eta ändern")
-plt.legend()
-plt.show()
+# losses, errors,w,b = perceptronOnlineVersion(X, t, N, eta=0.1)
+# print("Gewicht mit 0.1 eta:",w)
+# print("Bias mit eta 0.1", b)
+# visualize(X,t,w,b)
+# plt.plot(errors, label="error")
+# plt.plot(losses, label="losses")
+# plt.title("den Ausgangswert vom Eta ändern")
+# plt.legend()
+# plt.show()
 
 #Q8: Change the initial value of the weight vector  ww  to something different from 0 (e.g. [1, 1], [-10, 10], etc). What does it change?
 # Vary the learning rate again and conclude on the importance of weight initialization.
 
-losses, errors,w,b = perceptron_algorithmus(X, t, N, eta=100.0, w= np.array([-10.,-10.]))
-visualize(X,t,w,b)
-plt.plot(errors, label="error")
-plt.plot(losses, label="losses")
-plt.title("den Ausgangswert des Gewichtvektors ändern")
-plt.legend()
-plt.show()
+# losses, errors,w,b = perceptron_algorithmus(X, t, N, eta=100.0, w= np.array([-10.,-10.]))
+# visualize(X,t,w,b)
+# plt.plot(errors, label="error")
+# plt.plot(losses, label="losses")
+# plt.title("den Ausgangswert des Gewichtvektors ändern")
+# plt.legend()
+# plt.show()
 
 if __name__ == "__main__":
     pass
