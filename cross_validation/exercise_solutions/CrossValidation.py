@@ -3,7 +3,7 @@ Created on Fr Nov 13 2020
 @author: Cristian Rodrigo Guarachi Ibanez
 CrossValidation
 """
-
+#Exercise 4 - Cross-validation
 # Polynomial regression
 
 """Polynomial regression consists of fitting some data (x,y)(x,y) to a nn-order polynomial of the form:
